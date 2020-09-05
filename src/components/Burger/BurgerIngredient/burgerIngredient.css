@@ -1,0 +1,54 @@
+.image{
+  height:60%;
+   width:60%;
+}
+
+/* .BreadBottom {
+   height:auto;
+   width:auto;
+        background-color:peru;
+        border-top-right-radius:5px;
+        border-top-left-radius:5px;
+        border-bottom-right-radius:20px;
+        border-bottom-left-radius:20px;
+}
+
+.BreadTop {
+  height:80px;
+  background-color:peru;
+  border-top-right-radius:80px;
+  border-top-left-radius:80px;
+  border-bottom-right-radius:5px;
+  border-bottom-left-radius:5px;
+} */
+
+.Meat {
+  height:30px;
+  width:60%;
+    background: linear-gradient(#7f3608, #702e05);
+    margin: 2% auto;
+    border-radius: 15px;
+}
+
+.Cheese {
+  height:30px;
+  width:60%;
+    margin: 2% auto;
+    background: linear-gradient(#f4d004, #d6bb22);
+    border-radius: 20px;
+}
+
+.Salad {
+  height:30px;
+  width:60%;
+    margin: 2% auto;
+    background: linear-gradient(#228c1d, #91ce50);
+    border-radius: 20px;
+}
+
+.Bacon {
+  height:30px;
+  width:60%;
+    background: linear-gradient(#bf3813, #c45e38);
+    margin: 2% auto;
+}
