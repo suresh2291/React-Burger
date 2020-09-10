@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 import Aux from '../../hoc/All'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/buildControls/buildControls'
-
+import Modal from '../../components/ui/modal/Modal'
+import OrderSummary from '../../components/Burger/orderSummary/orderSummary'
 const INGREDIENT_PRICES = {
     salad:0.5,
     cheese:0.4,
@@ -21,7 +22,20 @@ class BurgerBuilder extends Component {
             cheese:0,
             meat:0
         },
-        totalPrice:4
+        totalPrice:4,
+        purchasable:false,
+        showOrder:false
+    }
+
+    updatePurchaseState(ingredients){
+        const sum = Object.keys(ingredients)
+                    .map(igKey =>{
+                        return ingredients[igKey]
+                    })
+                    .reduce((sum, el)=>{
+                        return sum + el;
+                    },0)
+                    this.setState({purchasable:sum>0})
     }
 
     addIngredientHandler = (type)=>{
@@ -35,6 +49,7 @@ class BurgerBuilder extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
+        this.updatePurchaseState(updatedIngredients)
     }
 
     removeIngredientHandler = (type)=>{
@@ -49,8 +64,20 @@ class BurgerBuilder extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice - priceAddition
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
+        this.updatePurchaseState(updatedIngredients)
     }
 
+    purchaseHandler = ()=>{
+        this.setState({showOrder:true})
+    }
+
+    purchaseCancelHandler = ()=>{
+        this.setState({showOrder:false})
+    }
+
+    purchaseContinue = ()=>{
+        alert("Yes Continue")
+    }
     render(){
         const disabledInfo = {
             ...this.state.ingredients
@@ -59,12 +86,23 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         }
         return(
+            
              <Aux>
+                 <Modal show={this.state.showOrder} modalClosed ={this.purchaseCancelHandler}>
+                     <OrderSummary 
+                     ingredients={this.state.ingredients}
+                     purchaseCancel = {this.purchaseCancelHandler}
+                     purchaseContinue={this.purchaseContinue}
+                     />
+                </Modal> 
                  <Burger ingredients= {this.state.ingredients}/>
                 <BuildControls
                           ingredientAdded = {this.addIngredientHandler}
                           ingredientRemoved = {this.removeIngredientHandler}
-                          disabled = {disabledInfo}/>
+                          disabled = {disabledInfo}
+                          price = {this.state.totalPrice}
+                          order={this.state.purchasable}
+                          showOrderModal={this.purchaseHandler }/>
              </Aux>
         )
     }
